@@ -1,0 +1,39 @@
+<html>
+    <head><title>FLL CODE UPLOAD</title></head>
+    <body>
+	<div id="code-submission">
+	    <p>test</p>
+	    <label>team name:</label>
+	    <select id="team-id-type">
+		<option value="FLL">FLL</option>
+		<option value="BGC">BGC</option>
+	    </select>
+	    <input type="text" id="team-id" placeholder="letter/number" />
+	    <br/>
+	    <input type="file" id="file-upload" name="file"/>
+	    <br/>
+	    <button id="file-upload-submit"/>submit</button>
+	</div>
+    </body>
+    <script>
+     const codeSubmissionDiv = document.getElementById("code-submission");
+     const fileUpload = document.getElementById("file-upload");
+     const fileSubmit = document.getElementById("file-upload-submit");
+     const teamIdType = document.getElementById("team-id-type");
+     const teamId = document.getElementById("team-id");
+
+     fileSubmit.addEventListener("click", function(e) {
+	 console.log("submit button clicked")
+	 if(teamId.value != "" && fileUpload.files.length > 0) {
+	     console.log("submit");
+	     let file = fileUpload.files[0];
+	     let rqBody = new FormData();
+	     rqBody.append("file", file);
+	     fetch("/upload/" + teamIdType.value + "-" + teamId.value, {method: "POST", body: rqBody});
+	 } else {
+	     console.log("missing team name and/or file")
+	 }
+     });
+    </script>
+
+</html>
