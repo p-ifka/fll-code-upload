@@ -2,181 +2,192 @@
 
 <style>
 
- body {
-     background-color: #f5f5f5;
-     font-family: "Lucida Console", "Courier new", monospace;
-     
- }
+  body {
+      background-color: #f5f5f5;
+      font-family: "Lucida Console", "Courier new", monospace;
 
- td, tr {
-     border-bottom: 1px solid black;
-     margin: 0;
-     spacing: 0;
- }
+  }
 
- tr:nth-child(even) {
-     background-color: #cdc9c9;
- }
+  td, tr {
+      border-bottom: 1px solid black;
+      margin: 0;
+      spacing: 0;
+  }
 
- tr:hover {
-     background-color: #bc8f8f;
- }
+  tr:nth-child(even) {
+      background-color: #cdc9c9;
+  }
 
- .divider {
-     background-color: #696969;
-     color: #ffffff;
-     text-align: center;
+  tr:hover {
+      background-color: #bc8f8f;
+  }
 
- }
+  .divider {
+      background-color: #696969;
+      color: #ffffff;
+      text-align: center;
 
- .center {
-     margin: auto;
-     width: 50%;
-     text-align: center
- }
+  }
 
- .error {
-     background-color: #b22222;
-     color: #ffffff
- }
- .success {
-     background-color: #458b00;
-     color: #ffffff
- }
+  .center {
+      margin: auto;
+      width: 50%;
+      text-align: center
+  }
+
+  .error {
+      background-color: #b22222;
+      color: #ffffff
+  }
+
+  .warn {
+      background-color: #ff7f00;
+      color: #ffffff;
+  }
+
+  .success {
+      background-color: #458b00;
+      color: #ffffff
+  }
 
 
 </style>
 
 <html>
-    <head><title>FLL CODE UPLOAD</title></head>
-    <body>
+  <head><title>FLL CODE UPLOAD</title></head>
+  <body>
+    <p>test</p>
 
-	<!-- upload -->
-	<div class="divider">
-	    <h1>upload</h1>
-	</div>
-	<div id="upload" class="center">
-	    <label>name: </label>
-	    <select id="team-id-type">
-		<option value="FLL">FLL</option>
-		<option value="BGC">BGC</option>
-	    </select>
-	    <input type="text" pattern="_[a-zA-Z0-9]+" minlength="1" maxlength="2" id="team-id" placeholder="letter/number" />
-	    <br/>
-	    <input type="file" id="file-upload" name="file"/>
-	    <br/>
-	    <button id="file-upload-submit"/>submit</button>
-	    <div id="upload-status">
+    <!-- upload -->
+    <div class="divider">
+      <h1>upload</h1>
+    </div>
+    <div id="upload" class="center">
+      <label>name: </label>
+      <select id="team-id-type">
+	<option value="FLL">FLL</option>
+	<option value="BGC">BGC</option>
+      </select>
+      <input type="text" pattern="_[a-zA-Z0-9]+" minlength="1" maxlength="2" id="team-id" placeholder="letter/number" />
+      <br/>
+      <input type="file" id="file-upload" name="file"/>
+      <br/>
+      <button id="file-upload-submit"/>submit</button>
+<div id="upload-status">
 
-	    </div>
-	</div>
-	<br/><br/>
-	</div>
+</div>
+</div>
+<br/><br/>
+</div>
 
-	<!-- download -->
-	<div class="divider">
-	    <h1>download</h1>
-	</div>
-	<table id="current-files" class="center">
-	    <tr><th>group-name</th><th>last-updated</th><th>download</th></tr>
+<!-- download -->
+<div class="divider">
+  <h1>download</h1>
+</div>
+<table id="current-files" class="center">
+  <tr><th>group-name</th><th>last-updated</th><th>download</th></tr>
 
-	    <!-- <tr><td>ex1</td><td>date</td><td><a href="/files" >download link</a></td></tr> -->
-	    <!-- <tr><td>ex2</td><td>date</td><td><a href="http://./files" >download link</a></td></tr> -->
-	    <!-- <tr><td>ex3</td><td>date</td><td><a href="http://./files" >download link</a></td></tr> -->
-	    <!-- <tr><td>ex4</td><td>date</td><td><a href="http://./files" >download link</a></td></tr> -->
-	</table>
-	<div id="download-status"></div>
-	<div class="divider">
-	    <h1>export</h1>
-	</div>
-	<div id="export" class="center">
-	    <button id="generate-tar">generate archive</button>
-	</div>
+  <!-- <tr><td>ex1</td><td>date</td><td><a href="/files" >download link</a></td></tr> -->
+  <!-- <tr><td>ex2</td><td>date</td><td><a href="http://./files" >download link</a></td></tr> -->
+  <!-- <tr><td>ex3</td><td>date</td><td><a href="http://./files" >download link</a></td></tr> -->
+  <!-- <tr><td>ex4</td><td>date</td><td><a href="http://./files" >download link</a></td></tr> -->
+</table>
+<div id="download-status"></div>
 
+<div class="divider">
+  <h1>export</h1>
+</div>
+<div id="export" class="center">
+  <button id="generate-tar">generate archive</button>
+  <div id="export-status"></div>
 
+  <a download="export.tar" href="dmp/a.tar"><button id="export-download" >download</button></a>
 
-    </body>
-    <script src="index.js"></script>
-
-    <!-- <script>
-	 const codeSubmissionDiv = document.getElementById("code-submission");
-	 const fileUpload = document.getElementById("file-upload");
-	 const fileSubmit = document.getElementById("file-upload-submit");
-	 const teamIdType = document.getElementById("team-id-type");
-	 const teamId = document.getElementById("team-id");
-
-	 fileSubmit.addEventListener("click", function(e) {
-	 console.log("submit button clicked")
-	 if(fileUpload.files.length <= 0) {
-
-	 }
-
-	 if(teamId.value != "" && fileUpload.files.length > 0) {
-	 console.log("submit");
-	 let file = fileUpload.files[0];
-	 let rqBody = new FormData();
-	 rqBody.append("file", file);
-	 fetch("/upload/" + teamIdType.value + "-" + teamId.value, {method: "POST", body: rqBody});
-	 } else {
-	 console.log("missing team name and/or file")
-	 }
-	 });
-	 </script> -->
-    <!-- <script>
-	 async function getFileLs() {
-	 let ret = await fetch("/get-code/", {method: "GET"});
-	 if(!ret.ok) {
-	 return "ERROR GETTING FILE LIST";
-	 }
-	 let txt = await ret.text();
-	 console.log(txt);
-	 return txt;
-
-	 }
-	 const flTable = document.getElementById("current-files");
-	 let fl = getFileLs().then(
-	 async function(listTxt) {
-	 let files = listTxt.split("\n");
-	 for(i in files) {
-	 let fileData = files[i].split(",");
-	 let tr = document.createElement("tr");
-	 let nameTD = document.createElement("td");
-	 let dateTD = document.createElement("td");
-	 let linkTD = document.createElement("td");
-	 let fileLink = document.createElement("a");
-	 fileLink.innerHTML = "download"
-	 fileLink.href = "/files/" + fileData[0] + "/" + fileData[2]
-	 fileLink.download = "code.llsp"
-	 nameTD.innerHTML = fileData[0];
-	 dateTD.innerHTML = fileData[1];
-	 linkTD.appendChild(fileLink);
-
-	 tr.appendChild(nameTD);
-	 tr.appendChild(dateTD);
-	 tr.appendChild(linkTD);
-	 flTable.appendChild(tr);
-	 }
-	 /* let newPTxt = ""; */
-	 /* console.log(fileListP) */
-	 /* let list = listTxt.split("\n"); */
-	 /* let i = 1 */
-	 /* for(i in list) { */
-	 /* console.log(list[i]) */
-	 /* newPTxt = newPTxt + "\n" + list[i]; */
-	 /* } */
-	 /* fileListP.innerHTML = newPTxt; */
-	 /* console.log(fileListP.innerHTML); */
+</div>
 
 
-	 },
-	 function(err) {
-	 console.log(err);
-	 }
-	 );
-	 /* console.log(fl); */
-	 /* fileListP.innerHTML = fl.value; */
+</body>
+<script src="index.js"></script>
+
+<!-- <script>
+     const codeSubmissionDiv = document.getElementById("code-submission");
+     const fileUpload = document.getElementById("file-upload");
+     const fileSubmit = document.getElementById("file-upload-submit");
+     const teamIdType = document.getElementById("team-id-type");
+     const teamId = document.getElementById("team-id");
+
+     fileSubmit.addEventListener("click", function(e) {
+     console.log("submit button clicked")
+     if(fileUpload.files.length <= 0) {
+
+     }
+
+     if(teamId.value != "" && fileUpload.files.length > 0) {
+     console.log("submit");
+     let file = fileUpload.files[0];
+     let rqBody = new FormData();
+     rqBody.append("file", file);
+     fetch("/upload/" + teamIdType.value + "-" + teamId.value, {method: "POST", body: rqBody});
+     } else {
+     console.log("missing team name and/or file")
+     }
+     });
+     </script> -->
+<!-- <script>
+     async function getFileLs() {
+     let ret = await fetch("/get-code/", {method: "GET"});
+     if(!ret.ok) {
+     return "ERROR GETTING FILE LIST";
+     }
+     let txt = await ret.text();
+     console.log(txt);
+     return txt;
+
+     }
+     const flTable = document.getElementById("current-files");
+     let fl = getFileLs().then(
+     async function(listTxt) {
+     let files = listTxt.split("\n");
+     for(i in files) {
+     let fileData = files[i].split(",");
+     let tr = document.createElement("tr");
+     let nameTD = document.createElement("td");
+     let dateTD = document.createElement("td");
+     let linkTD = document.createElement("td");
+     let fileLink = document.createElement("a");
+     fileLink.innerHTML = "download"
+     fileLink.href = "/files/" + fileData[0] + "/" + fileData[2]
+     fileLink.download = "code.llsp"
+     nameTD.innerHTML = fileData[0];
+     dateTD.innerHTML = fileData[1];
+     linkTD.appendChild(fileLink);
+
+     tr.appendChild(nameTD);
+     tr.appendChild(dateTD);
+     tr.appendChild(linkTD);
+     flTable.appendChild(tr);
+     }
+     /* let newPTxt = ""; */
+     /* console.log(fileListP) */
+     /* let list = listTxt.split("\n"); */
+     /* let i = 1 */
+     /* for(i in list) { */
+     /* console.log(list[i]) */
+     /* newPTxt = newPTxt + "\n" + list[i]; */
+     /* } */
+     /* fileListP.innerHTML = newPTxt; */
+     /* console.log(fileListP.innerHTML); */
 
 
-	 </script>
-    -->
+     },
+     function(err) {
+     console.log(err);
+     }
+     );
+     /* console.log(fl); */
+     /* fileListP.innerHTML = fl.value; */
+
+
+     </script>
+-->
 </html>

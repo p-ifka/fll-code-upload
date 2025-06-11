@@ -19,6 +19,8 @@ dd of="$fl_path"
 sed -i -e '1,4d' "$fl_path"
 sed -i '$d' "$fl_path"
 
+rm -f ../files/.export.lock
+
 printf "Content-Type: text/plain\r\n"
 printf "\r\n"
 echo "file probably uploaded"

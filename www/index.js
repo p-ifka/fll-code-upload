@@ -23,7 +23,6 @@ function popup(txt, parent, parentClass) {
     parent.appendChild(xb)
 }
 
-
 async function uploadCode(e) {
     /**
      * create POST request to /upload/{NAME} with
@@ -105,6 +104,51 @@ async function fillDownloadTable() {
 
 }
 
+async function generateExport() {
+    /**
+     * run CGI script to generate archive for exporting, create a popup to notify the user if:
+     * success: archive geerated
+     * warn: archive already exists, no new archive generated
+     * error: script failed to execute
+     * error: script failed to start tar process
+     * error: tar process failed after starting
+     **/
+    console.log("generate export clicked");
+    let rc = await fetch("/compress-files/", {method: "POST"});
+    console.log(rc);
+    if(rc.status == 200) {
+	popup(
+	    "archive created successfully",
+	    document.getElementById("export-status"),
+	    "success"
+	);
+    } else if(rc.status == 304) {
+	popup(
+	    "304: " + await rc.text(),
+	    document.getElementById("export-status"),
+	    "warn"
+	);
+    } else if(rc.status == 503) {
+	popup(
+	    "503: " + await rc.text(),
+	    document.getElementById("export-status"),
+	    "error"
+	);
+    } else if(rc.status == 500) {
+	popup(
+	    "500: " + await rc.text(),
+	    document.getElementById("export-status"),
+	    "error"
+	);
+    }
+    
+
+    
+
+}
+console.log("INDEX.JS");
 const uploadSubmitButton = document.getElementById("file-upload-submit");
+const generateArchiveButton = document.getElementById("generate-tar");
 uploadSubmitButton.addEventListener("click", uploadCode);
+generateArchiveButton.addEventListener("click", generateExport);
 fillDownloadTable();
