@@ -52,10 +52,18 @@ async function uploadCode(e) {
 	{method: "POST", body: rqBody}
     ).then(
 	function(i) {
-	    popup("file uploaded successfully", document.getElementById("upload-status"), "success");
+	    popup(
+		"file uploaded successfully",
+		document.getElementById("upload-status"),
+		"success");
+	    fillDownloadTable();
 	},
 	function(e) {
-	    popup("file uploaded failed to upload: " + e, document.getElementById("upload-status"), "error");
+	    popup(
+		"failed to upload: " + e,
+		document.getElementById("upload-status"),
+		"error"
+	    );
 	}
     );
 }
@@ -71,7 +79,9 @@ async function getFileList() {
 }
 
 async function fillDownloadTable() {
+    console.log("populating download table");
     const flTable = document.getElementById("current-files");
+    flTable.innerHTML = "";	// clear current table contents
     let fl = getFileList().then(
 	async function(flText) {
 	    let files = flText.split("\n");
@@ -124,7 +134,7 @@ async function generateExport() {
 	);
     } else if(rc.status == 304) {
 	popup(
-	    "304: " + await rc.text(),
+	    "304: no new archive created, archive is already up-to-date" + await rc.text(),
 	    document.getElementById("export-status"),
 	    "warn"
 	);
