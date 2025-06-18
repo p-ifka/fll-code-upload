@@ -102,7 +102,7 @@ async function fillDownloadTable() {
 
 		fileLink.innerHTML = "download"
 		fileLink.href = "/files/" + fileData[0] + "/" + fileData[2]
-		fileLink.download = "code.llsp"
+		fileLink.download = "code.llsp3"
 
 		nameTD.innerHTML = fileData[0];
 		dateTD.innerHTML = fileData[1];
