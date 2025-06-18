@@ -57,6 +57,9 @@ async function uploadCode(e) {
 		document.getElementById("upload-status"),
 		"success");
 	    fillDownloadTable();
+	    console.log("disabling submit button");
+	    e.target.disabled = true;
+	    setTimeout(function() { console.log("enabling submit button"); e.target.disabled = false;}, 5000);
 	},
 	function(e) {
 	    popup(
@@ -81,7 +84,9 @@ async function getFileList() {
 async function fillDownloadTable() {
     console.log("populating download table");
     const flTable = document.getElementById("current-files");
-    flTable.innerHTML = "";	// clear current table contents
+    const flTableHeader = document.getElementById("current-files-header");
+    flTable.innerHTML = "";
+    flTable.appendChild(flTableHeader);
     let fl = getFileList().then(
 	async function(flText) {
 	    let files = flText.split("\n");
