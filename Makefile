@@ -1,19 +1,20 @@
-perm:
-	chmod -R 0777 ./www
-	chmod 755 ./www/cgi-bin/*
+.PHONY: container run start test cgi rmcontainer
 
-build:
-	sudo docker build -t fllc .
+
+container:
+	docker build --no-cache-filter www -t fllc --no-cache-filter COPY .
+
+rmcontainer:
+	docker rm fllc-cont
+
 run:
-	sudo docker run --name fllc-cont -p 8080:80 fllc
+	sudo docker run --name fllc-cont -p 80:80 fllc
 start:
-	sudo docker start fllc-cont
-test:
-	sudo docker build -t fllc .
-	sudo docker run --name fllc-cont -p 8080:80 fllc
-	sudo docker rm fllc-cont
+	docker start fllc-cont
 
+test:	container run rmcontainer
 
 cgi:
 	cc src/get.c -o ./www/cgi-bin/get.cgi
 	cc src/dump.c -o ./www/cgi-bin/dump.cgi
+	cp src/upload.sh www/cgi-bin/upload.cgi

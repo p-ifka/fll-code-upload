@@ -12,7 +12,8 @@
 #include <string.h>
 #include <time.h>
 
-#define FILES_PATH "../files/"
+#include "const.h"
+/* #define FILES_PATH "../files/SEC */
 
 
 
@@ -51,10 +52,10 @@ int main() {
 	}
 	/* create formatted string for the date and time the file was uploaded */
 	struct tm *mostRecentTime;
-	time_t latestFileTime = latestFile - 4*(60*60); /* convert to EST manually */
+	time_t latestFileTime = latestFile*SEC_TO_DAY; /* convert from days back to seconds */
 	mostRecentTime = gmtime(&latestFileTime);
 	char* mostRecentTimeStr = malloc(256 * sizeof(char));
-	strftime(mostRecentTimeStr, 255, "%Y-%m-%d--%H:%M:%S", mostRecentTime);
+	strftime(mostRecentTimeStr, 255, "%Y-%m-%d", mostRecentTime);
 
 	/* output */
 	printf(",%s", mostRecentTimeStr); /* return formatted datetime */

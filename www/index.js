@@ -48,14 +48,16 @@ async function uploadCode(e) {
     let rqBody = new FormData();
     rqBody.append("file", fileInput.files[0]);
     let ret = fetch(
-	"/upload/" + teamIdType.value + "-" + teamIdTxt,
+	"/upload/" + teamIdType.value + "-" + teamIdTxt + "/" + fileInput.files[0].name,
 	{method: "POST", body: rqBody}
     ).then(
-	function(i) {
+	async function(i) {
 	    popup(
 		"file uploaded successfully",
 		document.getElementById("upload-status"),
 		"success");
+
+	    console.log(await i.text());
 	    fillDownloadTable();
 	    console.log("disabling submit button");
 	    e.target.disabled = true;
@@ -100,9 +102,8 @@ async function fillDownloadTable() {
 		let linkTD = document.createElement("td");
 		let fileLink = document.createElement("a");
 
-		fileLink.innerHTML = "download"
+		fileLink.innerHTML = "view files"
 		fileLink.href = "/files/" + fileData[0] + "/" + fileData[2]
-		fileLink.download = "code.llsp3"
 
 		nameTD.innerHTML = fileData[0];
 		dateTD.innerHTML = fileData[1];
