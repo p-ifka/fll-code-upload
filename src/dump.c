@@ -10,7 +10,7 @@
 
 
 #define FILES_PATH "/usr/local/apache2/htdocs/files/"
-#define DUMP_PATH "/usr/local/apache2/htdocs/dmp/"
+#define DUMP_PATH "/usr/local/apache2/htdocs/export/"
 
 
 int fileExists(const char *path) {
